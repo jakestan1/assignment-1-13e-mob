@@ -12,7 +12,7 @@ public class ZoneRegen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            regenMessage.SetActive(true); // Show the regeneration message
+            regenMessage.SetActive(true); 
             if (regenCoroutine == null)
             {
                 regenCoroutine = StartCoroutine(RegenPlayer());
@@ -24,7 +24,7 @@ public class ZoneRegen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            regenMessage.SetActive(false); // Hide the regeneration message
+            regenMessage.SetActive(false); 
             if (regenCoroutine != null)
             {
                 StopCoroutine(regenCoroutine);

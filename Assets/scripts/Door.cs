@@ -31,7 +31,6 @@ public class Door : MonoBehaviour
     {
         if (!opened)
         {
-            // Open the door by rotating it 90 degrees around the Y axis
             Vector3 newRotation = transform.eulerAngles;
             newRotation.y += 90f;
             transform.eulerAngles = newRotation;

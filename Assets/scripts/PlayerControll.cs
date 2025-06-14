@@ -15,20 +15,18 @@ using TMPro;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    // Interactivity and door opening
+    // Calling door
     Door currentDoor;
 
-    // References to other scripts
+    // Enemy
     public Enemy enemyScript;
 
-    // UI elements
     public GameObject congratsMessage;
     public Slider staminaSlider;
     public Slider healthSlider;
     public TextMeshProUGUI displayText;
     public TextMeshProUGUI playerHealthText;
 
-    // Player's camera
     public GameObject playerCamera;
 
     // Player's stats
@@ -41,75 +39,45 @@ public class PlayerController : MonoBehaviour
     int playerScore = 0;
     int coinsCollected = 0;
 
-    // Input vectors
+
     Vector3 movementInput = Vector3.zero;
     Vector3 rotationInput = Vector3.zero;
     Vector3 headRotationInput = Vector3.zero;
 
-    /// <summary>
-    /// Sets the maximum health value for the health slider.
-    /// </summary>
-    /// <param name="health">The maximum health value.</param>
+
     public void SetMaxHealth(float health)
     {
         healthSlider.maxValue = health;
         healthSlider.value = health;
     }
-
-    /// <summary>
-    /// Sets the maximum stamina value for the stamina slider.
-    /// </summary>
-    /// <param name="stamina">The maximum stamina value.</param>
     public void SetMaxStamina(float stamina)
     {
         staminaSlider.maxValue = stamina;
         staminaSlider.value = stamina;
     }
-
-    /// <summary>
-    /// Updates the health slider value.
-    /// </summary>
-    /// <param name="health">The current health value.</param>
     public void SetHealth(float health)
     {
         healthSlider.value = health;
     }
-
-    /// <summary>
-    /// Updates the stamina slider value.
-    /// </summary>
-    /// <param name="stamina">The current stamina value.</param>
     public void SetStamina(float stamina)
     {
         staminaSlider.value = stamina;
     }
-
-    /// <summary>
-    /// Sets up initial references and UI elements.
-    /// </summary>
     public void SetUp()
     {
         playerHealthText = GameObject.FindObjectOfType<FindScoreText>().GetComponent<TextMeshProUGUI>();
         displayText = GameObject.FindObjectOfType<FindScoreText>().GetComponent<TextMeshProUGUI>();
     }
-
-    // Start is called before the first frame update
     void Start()
     {
-        // Initialization code if needed
+        
     }
-
-    // Update is called once per frame
     void Update()
     {
         HandleMovement();
         HandleRotation();
         UpdateTimers();
     }
-
-    /// <summary>
-    /// Handles player movement based on input.
-    /// </summary>
     void HandleMovement()
     {
         float currentMoveSpeed = moveSpeed;
@@ -132,19 +100,11 @@ public class PlayerController : MonoBehaviour
         transform.position += movementVector * currentMoveSpeed * Time.deltaTime;
         playerHealthText.text = healthSlider.value.ToString("F1"); // Format health value to one decimal place
     }
-
-    /// <summary>
-    /// Handles player rotation based on input.
-    /// </summary>
     void HandleRotation()
     {
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationInput * rotationSpeed * Time.deltaTime);
         playerCamera.transform.rotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles + headRotationInput * rotationSpeed * Time.deltaTime);
     }
-
-    /// <summary>
-    /// Updates the interaction and cooldown timers.
-    /// </summary>
     void UpdateTimers()
     {
         if (staminaRegenTimer > 0)
@@ -157,8 +117,6 @@ public class PlayerController : MonoBehaviour
             attackCooldownTimer -= Time.deltaTime;
         }
     }
-
-    // Input action handlers
     void OnLook(InputValue value)
     {
         rotationInput.y = value.Get<Vector2>().x;
@@ -237,11 +195,6 @@ public class PlayerController : MonoBehaviour
             enemyScript = other.GetComponent<Enemy>();
         }
     }
-
-    /// <summary>
-    /// Decreases the player's health.
-    /// </summary>
-    /// 
     public void DecreaseHealth(float damage)
     {
         float newHealth = healthSlider.value - damage;
@@ -250,10 +203,6 @@ public class PlayerController : MonoBehaviour
 
     public bool Key = false;
 
-    /// <summary>
-    /// Updates the current door the player can interact with.
-    /// </summary>
-    /// <param name="door">The door the player can interact with.</param>
     public void UpdateDoor(Door door)
     {
         currentDoor = door;
